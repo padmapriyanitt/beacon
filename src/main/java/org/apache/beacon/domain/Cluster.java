@@ -1,10 +1,17 @@
 package org.apache.beacon.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -14,39 +21,43 @@ public class Cluster {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	@Column(name = "name")
 	private String name;
-	
+
 	@Column(name = "description")
 	private String description;
-	
+
 	@Column(name = "colo")
 	private String colo;
-	
+
 	@Column(name = "name_node_uri")
 	private String nameNodeUri;
-	
+
 	@Column(name = "execute_uri")
 	private String executeUri;
-	
+
 	@Column(name = "wf_engine_uri")
 	private String wfEngineUri;
-	
+
 	@Column(name = "messaging_uri")
 	private String messagingUri;
-	
+
 	@Column(name = "hs2_uri")
 	private String hs2Uri;
-	
+
 	@Column(name = "tags")
 	private String tags;
-	
+
 	@Column(name = "custom_properties")
 	private String customProperties;
-	
+
 	@Column(name = "acl")
 	private String acl;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "peers", joinColumns = @JoinColumn(name = "source_id"), inverseJoinColumns = @JoinColumn(name = "target_id"))
+	private Set<Cluster> peers = new HashSet<Cluster>();
 
 	public Integer getId() {
 		return id;
@@ -143,4 +154,13 @@ public class Cluster {
 	public void setAcl(String acl) {
 		this.acl = acl;
 	}
+
+	public Set<Cluster> getPeers() {
+		return peers;
+	}
+
+	public void setPeers(Set<Cluster> peers) {
+		this.peers = peers;
+	}
+
 }

@@ -1,7 +1,10 @@
-D:\beacon-mock\beacon\src\main\java\org\apache\beacon\web\BeaconController.java
-D:\beacon-mock\beacon\src\main\java\org\apache\beacon\dao\ClusterDao.java
-D:\beacon-mock\beacon\src\main\java\org\apache\beacon\app\Application.java
-D:\beacon-mock\beacon\src\main\java\org\apache\beacon\domain\Cluster.java
-D:\beacon-mock\beacon\src\main\java\org\apache\beacon\dao\PolicyDao.java
-D:\beacon-mock\beacon\src\main\java\org\apache\beacon\domain\Policy.java
-D:\beacon-mock\beacon\src\main\java\org\apache\beacon\service\BeaconService.java
+D:\ambari-dev\beaconmock\beacon\src\main\java\org\apache\beacon\app\WebConfiguration.java
+D:\ambari-dev\beaconmock\beacon\src\main\java\org\apache\beacon\dao\ClusterDao.java
+D:\ambari-dev\beaconmock\beacon\src\main\java\org\apache\beacon\domain\Pair.java
+D:\ambari-dev\beaconmock\beacon\src\main\java\org\apache\beacon\service\BeaconService.java
+D:\ambari-dev\beaconmock\beacon\src\main\java\org\apache\beacon\dao\PolicyDao.java
+D:\ambari-dev\beaconmock\beacon\src\main\java\org\apache\beacon\app\Application.java
+D:\ambari-dev\beaconmock\beacon\src\main\java\org\apache\beacon\domain\Policy.java
+D:\ambari-dev\beaconmock\beacon\src\main\java\org\apache\beacon\web\BeaconController.java
+D:\ambari-dev\beaconmock\beacon\src\main\java\org\apache\beacon\domain\Cluster.java
+D:\ambari-dev\beaconmock\beacon\src\main\java\org\apache\beacon\dao\AdminDao.java

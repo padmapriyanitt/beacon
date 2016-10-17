@@ -39,4 +39,15 @@ public class BeaconController {
 	public @ResponseBody Iterable<Policy> getPolicies() {
 		return beaconkService.getAllPolicies();
 	}
+	@RequestMapping(value = "/cluster/pair",method = RequestMethod.POST)
+	public @ResponseBody String setPeer() {
+		
+		return null;
+	}
+	
+	
+	@RequestMapping("/admin/query")
+	public @ResponseBody String query(@RequestBody String sql) {
+		return beaconkService.query(sql);
+	}
 }

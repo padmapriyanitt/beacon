@@ -1,5 +1,7 @@
 package org.apache.beacon.service;
 
+import javax.transaction.Transactional;
+
 import org.apache.beacon.dao.ClusterDao;
 import org.apache.beacon.dao.PolicyDao;
 import org.apache.beacon.domain.Cluster;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@Transactional
 public class BeaconService {
 
 	@Autowired
@@ -34,5 +37,10 @@ public class BeaconService {
 
 	public Policy savePolicy(Policy policy) {
 		return policyDao.save(policy);
+	}
+
+	public String query(String sql) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

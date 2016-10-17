@@ -1,6 +1,9 @@
 org\apache\beacon\domain\Cluster.class
+org\apache\beacon\domain\Pair.class
 org\apache\beacon\app\Application.class
 org\apache\beacon\dao\PolicyDao.class
+org\apache\beacon\app\WebConfiguration.class
+org\apache\beacon\dao\AdminDao.class
 org\apache\beacon\web\BeaconController.class
 org\apache\beacon\service\BeaconService.class
 org\apache\beacon\domain\Policy.class
