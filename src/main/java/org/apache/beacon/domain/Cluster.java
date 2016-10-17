@@ -1,6 +1,7 @@
 package org.apache.beacon.domain;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "clusters")
@@ -58,7 +60,10 @@ public class Cluster {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "peers", joinColumns = @JoinColumn(name = "source_id"), inverseJoinColumns = @JoinColumn(name = "target_id"))
 	private Set<Cluster> peers = new HashSet<Cluster>();
-
+	
+	@Transient
+	private List<String> clusterNames;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -163,4 +168,12 @@ public class Cluster {
 		this.peers = peers;
 	}
 
+	public List<String> getClusterNames() {
+		return clusterNames;
+	}
+
+	public void setClusterNames(List<String> clusterNames) {
+		this.clusterNames = clusterNames;
+	}
+	
 }
