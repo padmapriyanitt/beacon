@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.apache.beacon.domain.Cluster;
 import org.apache.beacon.domain.Pair;
-import org.apache.beacon.domain.Policy;
 import org.apache.beacon.service.BeaconService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,12 +16,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/api/beacon")
 public class BeaconController {
 
 	@Autowired
 	private BeaconService beaconkService;
 
-	@RequestMapping("/cluster/list")
+
+	@RequestMapping(value = "cluster/submit/{clusterName}", method = RequestMethod.POST)
+	public @ResponseBody Map<String,Object> registerCluster(
+			@PathVariable("clusterName") String name,
+			@RequestBody Cluster cluster) {
+		Cluster createdCluster = beaconkService.register(cluster);
+		HashMap <String,Object> resp=new HashMap<>();
+		resp.put("requestId","qtp2026718042"+Math.random());
+		resp.put("message","Submit successf(Cluster) ");
+		resp.put("status","SUCCEEDED");
+		return resp;
+	}
+	
+	@RequestMapping("cluster/list")
 	public @ResponseBody Map<String,Object> getClusters() {
 		Iterable<Cluster> allClusters = beaconkService.getAllClusters();
 		HashMap<String,Object> resp=new HashMap<>();
@@ -31,29 +44,29 @@ public class BeaconController {
 		return resp;
 	}
 
-	@RequestMapping(value = "/cluster/submit/{clusterName}", method = RequestMethod.POST)
-	public @ResponseBody Map registerCluster(
-			@PathVariable("clusterName") String name,
-			@RequestBody Cluster cluster) {
-		Cluster createdCluster = beaconkService.register(cluster);
-		HashMap <String,String> resp=new HashMap<>();
+	@RequestMapping("cluster/status/{clusterName}")
+	public @ResponseBody Map<String,Object> getClusterStatus(
+			@PathVariable("clusterName") String clusterName) {
+		//TODO implement...
+		HashMap <String,Object> resp=new HashMap<>();
 		resp.put("requestId","qtp2026718042"+Math.random());
-		resp.put("message","Submit successf(Cluster) ");
-		resp.put("status","SUCCEEDED");
 		return resp;
 	}
 
-	@RequestMapping("/cluster/get/{clusterName}")
+	@RequestMapping("cluster/get/{clusterName}")
 	public @ResponseBody Cluster getClusterInfo(
 			@PathVariable("clusterName") String clusterName) {
 		return beaconkService.getCluster(clusterName);
 	}
-
-	@RequestMapping("/policy/list")
-	public @ResponseBody Iterable<Policy> getPolicies() {
-		return beaconkService.getAllPolicies();
+	
+	
+	@RequestMapping(value = "cluster/delete/{clusterName}",method = RequestMethod.DELETE)
+	public @ResponseBody Map<String,String> deleteCluster(@PathVariable("clusterName") String name) {
+		//TODO implement
+		return null;
 	}
-	@RequestMapping(value = "/cluster/pair",method = RequestMethod.POST)
+	
+	@RequestMapping(value = "pair",method = RequestMethod.POST)
 	public @ResponseBody Map<String,String> setPeer(Pair pair) {
 		beaconkService.pair(pair);
 		HashMap <String,String> resp=new HashMap<>();

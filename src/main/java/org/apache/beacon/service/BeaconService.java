@@ -1,7 +1,6 @@
 package org.apache.beacon.service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Set;
 
 import javax.transaction.Transactional;
@@ -39,7 +38,6 @@ public class BeaconService {
 		return clusters;
 	}
 
-
 	private void setPeerClusters(Cluster cl) {
 		ArrayList<String> peerClusters = new ArrayList<>();
 		Set<Cluster> peers = cl.getPeers();
@@ -48,7 +46,6 @@ public class BeaconService {
 		}
 		cl.setClusterNames(peerClusters);
 	}
-
 
 	public Cluster register(Cluster cluster) {
 		return clusterDao.save(cluster);
@@ -69,6 +66,13 @@ public class BeaconService {
 	}
 
 	public void pair(Pair pair) {
+		Cluster sourceCluster = getSourceCluster();
+		Cluster targetCluster = clusterDao.findByName(pair.getName());
+		sourceCluster.getPeers().add(targetCluster);
+		clusterDao.save(sourceCluster);
+	}
+
+	private Cluster getSourceCluster() {
 		Configuration configuration = configurationDao
 				.findByName("source_cluster");
 		if (configuration == null) {
@@ -77,9 +81,24 @@ public class BeaconService {
 		}
 		String sourceClusterName = configuration.getValue();
 		Cluster sourceCluster = clusterDao.findByName(sourceClusterName);
-		Cluster targetCluster = clusterDao.findByName(pair.getName());
-		sourceCluster.getPeers().add(targetCluster);
-		clusterDao.save(sourceCluster);
+		return sourceCluster;
+	}
+
+	public void deltetePolicy(String name) {
+		Policy policy = policyDao.findByName(name);
+		policyDao.delete(policy);
+	}
+
+	public Policy getPolicy(String name) {
+		return policyDao.findByName(name);
+	}
+
+	public void submitPolicy(Policy policy, String name) {
+		Policy exitingPolicy = policyDao.findByName(name);
+		if (exitingPolicy != null) {
+			throw new RuntimeException("Policy already exists");
+		}
+		policyDao.save(policy);
 
 	}
 }
