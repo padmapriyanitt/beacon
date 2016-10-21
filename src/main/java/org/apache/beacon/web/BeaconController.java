@@ -1,9 +1,9 @@
 package org.apache.beacon.web;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.beacon.Utils;
 import org.apache.beacon.domain.Cluster;
 import org.apache.beacon.domain.Pair;
 import org.apache.beacon.service.BeaconService;
@@ -21,7 +21,9 @@ public class BeaconController {
 
 	@Autowired
 	private BeaconService beaconkService;
-
+	
+	@Autowired
+	private Utils utils;
 
 	@RequestMapping(value = "cluster/submit/{clusterName}", method = RequestMethod.POST)
 	public @ResponseBody Map<String,Object> registerCluster(
@@ -39,7 +41,7 @@ public class BeaconController {
 	public @ResponseBody Map<String,Object> getClusters() {
 		Iterable<Cluster> allClusters = beaconkService.getAllClusters();
 		HashMap<String,Object> resp=new HashMap<>();
-		resp.put("totalResults", getIterableSize(allClusters));
+		resp.put("totalResults", utils.getIterableSize(allClusters));
 		resp.put("entity",allClusters);
 		return resp;
 	}
@@ -76,18 +78,6 @@ public class BeaconController {
 		return resp;
 	}
 	
-	private long getIterableSize(Iterable values) {
-		if (values==null){
-			return 0;
-		}
-		if (values instanceof Collection<?>) {
-			return ((Collection<?>) values).size();
-		}
-		long size = 0L;
-		for (Object value : values) {
-			size++;
-		}
-		return size;
-	}
+
 
 }

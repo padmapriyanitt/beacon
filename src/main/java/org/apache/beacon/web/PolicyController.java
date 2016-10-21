@@ -3,8 +3,10 @@ package org.apache.beacon.web;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.beacon.Utils;
 import org.apache.beacon.domain.Policy;
 import org.apache.beacon.service.BeaconService;
+import org.apache.beacon.service.PolicyScheduler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +21,12 @@ public class PolicyController {
 	@Autowired
 	private BeaconService beaconService;
 	
+	@Autowired
+	private PolicyScheduler policyScheduler;
+	
+	@Autowired
+	private Utils utils;
+	
 	@RequestMapping(value = "submit/{policyName}", method = RequestMethod.POST)
 	public @ResponseBody Map <String,Object> submitPolicy(
 			@PathVariable("policyName") String name,
@@ -31,8 +39,8 @@ public class PolicyController {
 		return resp;
 	}
 	@RequestMapping(value = "schedule/{policyName}", method = RequestMethod.POST)
-	public @ResponseBody Map<String,Object> submitPolicy(@PathVariable("policyName") String name){
-		//TODO implementation
+	public @ResponseBody Map<String,Object> schedulePolicy(@PathVariable("policyName") String name){
+		policyScheduler.schedule(name);
 		HashMap <String,Object> resp=new HashMap<>();
 		resp.put("requestId","qtp2026718042"+Math.random());
 		resp.put("message","Schedule successf(Policy) ");
@@ -64,8 +72,8 @@ public class PolicyController {
 		return policy;
 	}
 	@RequestMapping(value = "delete/{policyName}", method = RequestMethod.DELETE)
-	public @ResponseBody Map deletePolicy(@PathVariable("policyName") String name){
-		HashMap <String,String> resp=new HashMap<>();
+	public @ResponseBody Map<String, Object> deletePolicy(@PathVariable("policyName") String name){
+		HashMap <String,Object> resp=new HashMap<>();
 		beaconService.deltetePolicy(name);
 		resp.put("requestId","qtp2026718042"+Math.random());
 		resp.put("message","Policy deleted(Policy) ");
@@ -74,8 +82,12 @@ public class PolicyController {
 	}
 	
 	@RequestMapping("list")
-	public @ResponseBody Iterable<Policy> getPolicies() {
-		return beaconService.getAllPolicies();
+	public @ResponseBody Map<String, Object> getPolicies() {
+		Iterable<Policy> allPolicies = beaconService.getAllPolicies();
+		HashMap<String,Object> resp=new HashMap<>();
+		resp.put("totalResults", utils.getIterableSize(allPolicies));
+		resp.put("entity",allPolicies);
+		return resp;
 	}
 
 }

@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 
 import org.apache.beacon.dao.ClusterDao;
 import org.apache.beacon.dao.ConfigurationDao;
+import org.apache.beacon.dao.InstanceDao;
 import org.apache.beacon.dao.PolicyDao;
 import org.apache.beacon.domain.Cluster;
 import org.apache.beacon.domain.Configuration;
@@ -14,6 +15,7 @@ import org.apache.beacon.domain.Pair;
 import org.apache.beacon.domain.Policy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 @Service
 @Transactional
@@ -26,8 +28,12 @@ public class BeaconService {
 	private PolicyDao policyDao;
 
 	@Autowired
+	private InstanceDao instanceDao;
+	
+	@Autowired
 	private ConfigurationDao configurationDao;
 
+	
 	public Iterable<Cluster> getAllClusters() {
 		Iterable<Cluster> clusters = clusterDao.findAll();
 		if (clusters != null) {
@@ -75,13 +81,12 @@ public class BeaconService {
 	private Cluster getSourceCluster() {
 		Configuration configuration = configurationDao
 				.findByName("source_cluster");
-		if (configuration == null) {
+		if (configuration == null ||  StringUtils.isEmpty(configuration.getValue())) {
 			throw new RuntimeException(
 					"Source Cluster not configured in configuraiton");
 		}
-		String sourceClusterName = configuration.getValue();
-		Cluster sourceCluster = clusterDao.findByName(sourceClusterName);
-		return sourceCluster;
+		String clusterId = configuration.getValue();
+		return clusterDao.findOne(Long.parseLong(clusterId));
 	}
 
 	public void deltetePolicy(String name) {
