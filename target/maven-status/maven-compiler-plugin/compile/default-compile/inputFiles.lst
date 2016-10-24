@@ -1,12 +1,11 @@
 D:\ambari-dev\beaconmock\beacon\src\main\java\org\apache\beacon\JobStatus.java
-D:\ambari-dev\beaconmock\beacon\src\main\java\org\apache\beacon\service\PolicyScheduler.java
-D:\ambari-dev\beaconmock\beacon\src\main\java\org\apache\beacon\domain\Pair.java
 D:\ambari-dev\beaconmock\beacon\src\main\java\org\apache\beacon\dao\ClusterDao.java
+D:\ambari-dev\beaconmock\beacon\src\main\java\org\apache\beacon\domain\Pair.java
 D:\ambari-dev\beaconmock\beacon\src\main\java\org\apache\beacon\service\BeaconService.java
 D:\ambari-dev\beaconmock\beacon\src\main\java\org\apache\beacon\dao\PolicyDao.java
 D:\ambari-dev\beaconmock\beacon\src\main\java\org\apache\beacon\dao\InstanceDao.java
-D:\ambari-dev\beaconmock\beacon\src\main\java\org\apache\beacon\domain\Policy.java
 D:\ambari-dev\beaconmock\beacon\src\main\java\org\apache\beacon\domain\Instance.java
+D:\ambari-dev\beaconmock\beacon\src\main\java\org\apache\beacon\domain\Policy.java
 D:\ambari-dev\beaconmock\beacon\src\main\java\org\apache\beacon\web\PolicyController.java
 D:\ambari-dev\beaconmock\beacon\src\main\java\org\apache\beacon\service\ScheduledTasks.java
 D:\ambari-dev\beaconmock\beacon\src\main\java\org\apache\beacon\domain\Configuration.java
