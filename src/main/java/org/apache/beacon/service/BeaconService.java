@@ -5,12 +5,14 @@ import java.util.Set;
 
 import javax.transaction.Transactional;
 
+import org.apache.beacon.JobStatus;
 import org.apache.beacon.dao.ClusterDao;
 import org.apache.beacon.dao.ConfigurationDao;
 import org.apache.beacon.dao.InstanceDao;
 import org.apache.beacon.dao.PolicyDao;
 import org.apache.beacon.domain.Cluster;
 import org.apache.beacon.domain.Configuration;
+import org.apache.beacon.domain.Instance;
 import org.apache.beacon.domain.Pair;
 import org.apache.beacon.domain.Policy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,7 @@ public class BeaconService {
 	
 	@Autowired
 	private ConfigurationDao configurationDao;
+
 
 	
 	public Iterable<Cluster> getAllClusters() {
@@ -105,5 +108,19 @@ public class BeaconService {
 		}
 		policyDao.save(policy);
 
+	}
+
+	public void schedule(String name) {
+		Policy policy = policyDao.findByName(name);
+		Instance inst = new Instance();
+		//inst.setPolicyId(policy.getId());
+		inst.setPolicy(policy);
+		inst.setStatus(JobStatus.RUNNING.name());
+		instanceDao.save(inst);
+
+	}
+
+	public Iterable<Instance> getAllInstances() {
+		return instanceDao.findAll();
 	}
 }

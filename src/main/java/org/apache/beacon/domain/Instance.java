@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -16,15 +18,18 @@ public class Instance {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
-	@Column(name = "policy_id")
-	private Integer policyId;
-	
+
+//	@Column(name = "policy_id")
+//	private Integer policyId;
+//
 	@Column(name = "start_time")
 	private Date startTime;
-	
+
 	@Column(name = "status")
 	private String status;
+	@ManyToOne
+	@JoinColumn(name = "policy_id")
+	private Policy policy;
 
 	public Integer getId() {
 		return id;
@@ -34,14 +39,14 @@ public class Instance {
 		this.id = id;
 	}
 
-	public Integer getPolicyId() {
-		return policyId;
-			   
-	}
-
-	public void setPolicyId(Integer policyId) {
-		this.policyId = policyId;
-	}
+//	public Integer getPolicyId() {
+//		return policyId;
+//
+//	}
+//
+//	public void setPolicyId(Integer policyId) {
+//		this.policyId = policyId;
+//	}
 
 	public Date getStartTime() {
 		return startTime;
@@ -58,6 +63,13 @@ public class Instance {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	
+
+	public Policy getPolicy() {
+		return policy;
+	}
+
+	public void setPolicy(Policy policy) {
+		this.policy = policy;
+	}
+
 }

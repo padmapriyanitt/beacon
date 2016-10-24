@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class ScheduledTasks {
 	
-	@Autowired
-	private PolicyScheduler policyScheduler;
-	@Scheduled(fixedDelay = 60000)
-	public void runPolicies() {
-		policyScheduler.schedulePolicies();
-	}
+//	@Autowired
+//	private PolicyScheduler policyScheduler;
+//	@Scheduled(fixedDelay = 60000)
+//	public void runPolicies() {
+//		policyScheduler.schedulePolicies();
+//	}
 }
