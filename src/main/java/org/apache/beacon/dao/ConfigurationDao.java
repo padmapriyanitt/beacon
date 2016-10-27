@@ -9,6 +9,6 @@ import org.apache.beacon.domain.Configuration;
 import org.springframework.data.repository.CrudRepository;
 
 @Transactional
-public interface ConfigurationDao extends CrudRepository<Cluster, Serializable>{
+public interface ConfigurationDao extends CrudRepository<Configuration, Serializable>{
 	public Configuration findByName(String name);
 }

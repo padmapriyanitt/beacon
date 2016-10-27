@@ -17,6 +17,9 @@ public class Policy {
 
 	@Column(name = "name")
 	private String name;
+	
+	@Column(name = "status")
+	private String status;
 
 	@Column(name = "type")
 	private String type;
@@ -24,13 +27,13 @@ public class Policy {
 	@Column(name = "dataset")
 	private String dataset;
 
-	@Column(name = "sourceCluster")
+	@Column(name = "source_cluster")
 	private String sourceCluster;
 
-	@Column(name = "targetCluster")
+	@Column(name = "target_cluster")
 	private String targetCluster;
 
-	@Column(name = "frequencyInSec")
+	@Column(name = "frequency_in_sec")
 	private long frequencyInSec;
 
 	@Column(name = "tags")
@@ -39,22 +42,22 @@ public class Policy {
 	@Column(name = "component")
 	private String component;
 
-	@Column(name = "aclOwner")
+	@Column(name = "acl_owner")
 	private String aclOwner;
 
-	@Column(name = "aclGroup")
+	@Column(name = "acl_group")
 	private String aclGroup;
 
-	@Column(name = "aclPermission")
+	@Column(name = "acl_permission")
 	private String aclPermission;
 
-	@Column(name = "retryAttempts")
+	@Column(name = "retry_attempts")
 	private int retryAttempts;
 
 	@Column(name = "queue")
 	private String queue;
 
-	@Column(name = "maxEvents")
+	@Column(name = "max_events")
 	private int maxEvents;
 
 	public Integer getId() {
@@ -71,6 +74,14 @@ public class Policy {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public String getType() {

@@ -67,8 +67,14 @@ public class BeaconService {
 	}
 
 	public Iterable<Policy> getAllPolicies() {
-		return policyDao.findAll();
+		Cluster sourceCluster = getSourceCluster();
+		return policyDao.findBySourceCluster(sourceCluster.getName());
 	}
+	
+	public Iterable<Policy> getIncomingPolicies() {
+		Cluster sourceCluster = getSourceCluster();
+		return policyDao.findByTargetCluster(sourceCluster.getName());
+	} 
 
 	public Policy savePolicy(Policy policy) {
 		return policyDao.save(policy);
@@ -89,7 +95,7 @@ public class BeaconService {
 					"Source Cluster not configured in configuraiton");
 		}
 		String clusterId = configuration.getValue();
-		return clusterDao.findOne(Long.parseLong(clusterId));
+		return clusterDao.findOne(Integer.parseInt(clusterId));
 	}
 
 	public void deltetePolicy(String name) {
@@ -103,6 +109,7 @@ public class BeaconService {
 
 	public void submitPolicy(Policy policy, String name) {
 		Policy exitingPolicy = policyDao.findByName(name);
+		policy.setStatus("SUBMITTED");
 		if (exitingPolicy != null) {
 			throw new RuntimeException("Policy already exists");
 		}
@@ -112,6 +119,8 @@ public class BeaconService {
 
 	public void schedule(String name) {
 		Policy policy = policyDao.findByName(name);
+		policy.setStatus("RUNNING");
+		policyDao.save(policy);
 		Instance inst = new Instance();
 		//inst.setPolicyId(policy.getId());
 		inst.setPolicy(policy);
@@ -120,6 +129,17 @@ public class BeaconService {
 
 	}
 
+	public void suspendPolicy(String name) {
+		Policy policy = policyDao.findByName(name);
+		policy.setStatus("SUSPENDED");
+		policyDao.save(policy);
+	}
+
+	public void resumePolicy(String name) {
+		Policy policy = policyDao.findByName(name);
+		policy.setStatus("RUNNING");
+		policyDao.save(policy);
+	}
 	public Iterable<Instance> getAllInstances() {
 		return instanceDao.findAll();
 	}

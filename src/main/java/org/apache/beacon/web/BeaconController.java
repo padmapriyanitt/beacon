@@ -69,7 +69,7 @@ public class BeaconController {
 	}
 	
 	@RequestMapping(value = "pair",method = RequestMethod.POST)
-	public @ResponseBody Map<String,String> setPeer(Pair pair) {
+	public @ResponseBody Map<String,String> setPeer(@RequestBody Pair pair) {
 		beaconkService.pair(pair);
 		HashMap <String,String> resp=new HashMap<>();
 		resp.put("requestId","qtp2026718042"+Math.random());

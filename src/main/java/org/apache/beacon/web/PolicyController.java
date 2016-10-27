@@ -69,6 +69,7 @@ public class PolicyController {
 		Policy policy = beaconService.getPolicy(name);
 		return policy;
 	}
+	
 	@RequestMapping(value = "delete/{policyName}", method = RequestMethod.DELETE)
 	public @ResponseBody Map<String, Object> deletePolicy(@PathVariable("policyName") String name){
 		HashMap <String,Object> resp=new HashMap<>();
@@ -79,12 +80,41 @@ public class PolicyController {
 		return resp;
 	}
 	
+	@RequestMapping(value = "suspend/{policyName}", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> suspendPolicy(@PathVariable("policyName") String name){
+		HashMap <String,Object> resp=new HashMap<>();
+		beaconService.suspendPolicy(name);
+		resp.put("requestId","qtp2026718042"+Math.random());
+		resp.put("message","Policy suspended(Policy) ");
+		resp.put("status","SUCCEEDED");
+		return resp;
+	}
+	
+	@RequestMapping(value = "resume/{policyName}", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> resumePolicy(@PathVariable("policyName") String name){
+		HashMap <String,Object> resp=new HashMap<>();
+		beaconService.resumePolicy(name);
+		resp.put("requestId","qtp2026718042"+Math.random());
+		resp.put("message","Policy resumed(Policy) ");
+		resp.put("status","SUCCEEDED");
+		return resp;
+	}
+	
 	@RequestMapping("list")
 	public @ResponseBody Map<String, Object> getPolicies() {
 		Iterable<Policy> allPolicies = beaconService.getAllPolicies();
 		HashMap<String,Object> resp=new HashMap<>();
 		resp.put("totalResults", utils.getIterableSize(allPolicies));
 		resp.put("entity",allPolicies);
+		return resp;
+	}
+	
+	@RequestMapping("incoming/list")
+	public @ResponseBody Map<String, Object> getIncomingPolicies() {
+		Iterable<Policy> incomingPolicies = beaconService.getIncomingPolicies();
+		HashMap<String,Object> resp=new HashMap<>();
+		resp.put("totalResults", utils.getIterableSize(incomingPolicies));
+		resp.put("entity",incomingPolicies);
 		return resp;
 	}
 	
